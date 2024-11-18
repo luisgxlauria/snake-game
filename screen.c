@@ -35,3 +35,21 @@ void screenBoxEnable() {
 void screenBoxDisable() {
     printf("%s(B", ESC); // Disable box drawing mode
 }
+
+void screenInit(int drawBorders) {
+    screenClear();
+    if (drawBorders) {
+        for (int i = SCRSTARTY; i <= SCRENDY; i++) {
+            screenGotoxy(SCRSTARTX, i);
+            printf("|");
+            screenGotoxy(SCRENDX, i);
+            printf("|");
+        }
+    }
+    screenUpdate();
+}
+
+void screenDestroy() {
+    screenClear();
+    screenShowCursor();
+}

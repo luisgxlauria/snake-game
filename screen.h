@@ -33,3 +33,6 @@ void screenSetColor(screenColor fg, screenColor bg);
 void screenGotoxy(int x, int y);
 void screenBoxEnable();
 void screenBoxDisable();
+
+void screenInit(int drawBorders);
+void screenDestroy();
