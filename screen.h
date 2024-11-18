@@ -13,3 +13,9 @@
 #define CLEARSCREEN    "[2J"
 
 #endif / SCREEN_H */
+
+void screenHomeCursor();
+void screenShowCursor();
+void screenHideCursor();
+void screenClear();
+void screenUpdate();
