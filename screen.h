@@ -25,3 +25,11 @@ typedef enum {
 } screenColor;
 
 void screenSetColor(screenColor fg, screenColor bg);
+#define SCRSTARTX      3
+#define SCRENDX        75
+#define SCRSTARTY      1
+#define SCRENDY        23
+
+void screenGotoxy(int x, int y);
+void screenBoxEnable();
+void screenBoxDisable();
