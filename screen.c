@@ -20,3 +20,7 @@ static inline void screenClear() {
 static inline void screenUpdate() {
     fflush(stdout);
 }
+void screenSetColor(screenColor fg, screenColor bg) {
+    printf("%s[3%dm", ESC, fg); // Foreground color
+    printf("%s[4%dm", ESC, bg); // Background color
+}

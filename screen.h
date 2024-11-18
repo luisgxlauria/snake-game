@@ -19,3 +19,9 @@ void screenShowCursor();
 void screenHideCursor();
 void screenClear();
 void screenUpdate();
+typedef enum {
+    BLACK, RED, GREEN, BROWN, BLUE, MAGENTA, CYAN, LIGHTGRAY,
+    DARKGRAY, LIGHTRED, LIGHTGREEN, YELLOW, LIGHTBLUE, LIGHTMAGENTA, LIGHTCYAN, WHITE
+} screenColor;
+
+void screenSetColor(screenColor fg, screenColor bg);
