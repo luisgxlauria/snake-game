@@ -171,3 +171,62 @@ void drawGame() {
     screenSetNormal();
     screenUpdate();
 }
+
+void updateGame();
+
+void updateGame() {
+    if (fimDoJogo || pausado) return;
+
+    int newX = cobra.posicao[0].x + direcaox;
+    int newY = cobra.posicao[0].y + direcaoy;
+
+    if (newX < 0 || newX >= COLUNAS || newY < 0 || newY >= LINHAS) {
+        fimDoJogo = 1;
+        endGame();
+        return;
+    }
+
+    for (int i = 0; i < NUM_OBSTACULOS; i++) {
+        if (newX == obstaculos[i].x && newY == obstaculos[i].y) {
+            fimDoJogo = 1;
+            endGame();
+            return;
+        }
+    }
+
+    for (int i = 1; i < cobra.tamanho; i++) {
+        if (cobra.posicao[i].x == newX && cobra.posicao[i].y == newY) {
+            fimDoJogo = 1;
+            endGame();
+            return;
+        }
+    }
+
+    if (newX == food.posicao.x && newY == food.posicao.y) {
+        cobra.tamanho++;
+        if (cobra.tamanho > cobra.capacidade) {
+            cobra.capacidade = 2;
+            cobra.posicao = (Coordenada *)realloc(cobra.posicao, cobra.capacidade * sizeof(Coordenada));
+            if (cobra.posicao == NULL) {
+                printf("Erro ao realocar memória");
+                exit(EXIT_FAILURE);
+            }
+        }
+        generateFood();
+
+        if (cobra.tamanho % INCREMENTO_VELOCIDADE == 0 && cobra.velocidade > VELOCIDADE_MINIMA) {
+            cobra.velocidade -= 5;
+            timerInit(cobra.velocidade);
+        }
+    } else {
+        screenGotoxy(cobra.posicao[cobra.tamanho - 1].x, cobra.posicao[cobra.tamanho - 1].y);
+        printf(" ");
+    }
+
+    for (int i = cobra.tamanho - 1; i > 0; i--) {
+        cobra.posicao[i] = cobra.posicao[i - 1];
+    }
+
+    cobra.posicao[0].x = newX;
+    cobra.posicao[0].y = newY;
+}
