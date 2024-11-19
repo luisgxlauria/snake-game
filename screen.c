@@ -1,29 +1,32 @@
 #include "screen.h"
+#include <stdio.h>
 
-static inline void screenHomeCursor() {
+void screenHomeCursor() {
     printf("%s%s", ESC, HOMECURSOR);
 }
 
-static inline void screenShowCursor() {
+void screenShowCursor() {
     printf("%s%s", ESC, SHOWCURSOR);
 }
 
-static inline void screenHideCursor() {
+void screenHideCursor() {
     printf("%s%s", ESC, HIDECURSOR);
 }
 
-static inline void screenClear() {
+void screenClear() {
     printf("%s%s", ESC, CLEARSCREEN);
     screenHomeCursor();
 }
 
-static inline void screenUpdate() {
+void screenUpdate() {
     fflush(stdout);
 }
+
 void screenSetColor(screenColor fg, screenColor bg) {
     printf("%s[3%dm", ESC, fg); // Foreground color
     printf("%s[4%dm", ESC, bg); // Background color
 }
+
 void screenGotoxy(int x, int y) {
     printf("%s[%d;%dH", ESC, y, x);
 }
@@ -52,4 +55,9 @@ void screenInit(int drawBorders) {
 void screenDestroy() {
     screenClear();
     screenShowCursor();
+}
+
+void screenSetNormal() {
+    printf("%s%s", ESC, NORMALTEXT); // Resetando as cores e o estilo do texto
+    screenUpdate();
 }

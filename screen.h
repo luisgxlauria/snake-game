@@ -12,27 +12,31 @@
 #define HIDECURSOR     "[?25l"
 #define CLEARSCREEN    "[2J"
 
-#endif / SCREEN_H */
-
-void screenHomeCursor();
-void screenShowCursor();
-void screenHideCursor();
-void screenClear();
-void screenUpdate();
-typedef enum {
-    BLACK, RED, GREEN, BROWN, BLUE, MAGENTA, CYAN, LIGHTGRAY,
-    DARKGRAY, LIGHTRED, LIGHTGREEN, YELLOW, LIGHTBLUE, LIGHTMAGENTA, LIGHTCYAN, WHITE
-} screenColor;
-
-void screenSetColor(screenColor fg, screenColor bg);
+/* Screen Dimensions */
 #define SCRSTARTX      3
 #define SCRENDX        75
 #define SCRSTARTY      1
 #define SCRENDY        23
 
+/* Enum for Screen Colors */
+typedef enum {
+    BLACK, RED, GREEN, BROWN, BLUE, MAGENTA, CYAN, LIGHTGRAY,
+    DARKGRAY, LIGHTRED, LIGHTGREEN, YELLOW, LIGHTBLUE, LIGHTMAGENTA, LIGHTCYAN, WHITE
+} screenColor;
+
+/* Function Declarations */
+void screenHomeCursor();
+void screenShowCursor();
+void screenHideCursor();
+void screenClear();
+void screenUpdate();
+void screenSetColor(screenColor fg, screenColor bg);
 void screenGotoxy(int x, int y);
 void screenBoxEnable();
 void screenBoxDisable();
-
 void screenInit(int drawBorders);
 void screenDestroy();
+void screenSetNormal();
+
+
+#endif /* SCREEN_H */

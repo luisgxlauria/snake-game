@@ -1,7 +1,8 @@
-#include <stdio.h>
+// score.c
 #include "score.h"
+#include <stdio.h>
 
-void loadScores(int scores[MAX_SCORES]) {
+void loadScores(int scores[]) {
     FILE* file = fopen("scores.txt", "r");
     if (!file) {
         for (int i = 0; i < MAX_SCORES; i++) {
@@ -15,7 +16,7 @@ void loadScores(int scores[MAX_SCORES]) {
     }
 }
 
-void saveScore(int scores[MAX_SCORES], int score) {
+void saveScore(int scores[], int score) {
     int i;
     for (i = 0; i < MAX_SCORES; i++) {
         if (score > scores[i]) {
@@ -39,7 +40,7 @@ void saveScore(int scores[MAX_SCORES], int score) {
     }
 }
 
-void displayScores(const int scores[MAX_SCORES]) {
+void displayScores(const int scores[]) {
     printf("\nTop Scores:\n");
     for (int i = 0; i < MAX_SCORES; i++) {
         printf("%d: %d\n", i + 1, scores[i]);

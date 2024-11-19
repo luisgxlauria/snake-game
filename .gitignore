@@ -1,0 +1,52 @@
+# Ignore Python bytecode files
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignore virtual environment directories
+venv/
+env/
+
+# Ignore IDE/editor specific files
+.vscode/
+.idea/
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore log files
+*.log
+
+# Ignore compiled files
+*.exe
+*.dll
+*.so
+*.dylib
+*.o
+*.out
+
+# Ignore coverage reports
+coverage/
+*.cover
+*.coverage
+*.cov
+*.gcov
+
+# Ignore build directories
+build/
+dist/
+*.egg-info/
+
+# Ignore CMake build directories
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Ignore other build artifacts
+*.obj
+*.elf
+*.map
+*.bin
+*.hex
