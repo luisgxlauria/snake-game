@@ -230,3 +230,14 @@ void updateGame() {
     cobra.posicao[0].x = newX;
     cobra.posicao[0].y = newY;
 }
+
+void endGame();
+
+void endGame() {
+    screenGotoxy(COLUNAS / 2 - 5, LINHAS / 2);
+    printf("Fim do Jogo! Pontuação: %d ponto(s)\n", cobra.tamanho - 1);
+    screenUpdate();
+    saveScore(scores, cobra.tamanho - 1);
+    displayScores(scores);
+    free(cobra.posicao);
+}
