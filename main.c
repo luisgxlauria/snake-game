@@ -99,3 +99,26 @@ void generateFood() {
     } while (valid == 0);
 }
 
+void drawBorders();
+void showScoreAndHints();
+
+void drawBorders() {
+    screenClear();
+    printf("\u250c");
+    for (int i = 0; i < COLUNAS; i++)
+        printf("\u2500");
+    printf("\u2510\n");
+    for (int j = 0; j < LINHAS; j++) {
+        printf("\u2502");
+        for (int i = 0; i < COLUNAS; i++)
+            printf(" ");
+        printf("\u2502\n");
+    }
+    printf("\u2514");
+    for (int i = 0; i < COLUNAS; i++)
+        printf("\u2500");
+    printf("\u2518\n");
+
+    showScoreAndHints();
+}
+
