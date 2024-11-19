@@ -60,3 +60,18 @@ void initializeGame() {
     generateObstacles();
     generateFood();
 }
+void generateObstacles() {
+    for (int i = 0; i < NUM_OBSTACULOS; i++) {
+        int valid;
+        do {
+            valid = 1;
+            obstaculos[i].x = rand() % COLUNAS;
+            obstaculos[i].y = rand() % LINHAS;
+
+            if (obstaculos[i].x == cobra.posicao[0].x && obstaculos[i].y == cobra.posicao[0].y) {
+                valid = 0;
+            }
+        } while (!valid);
+    }
+}
+
