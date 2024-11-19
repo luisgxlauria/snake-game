@@ -75,3 +75,27 @@ void generateObstacles() {
     }
 }
 
+void generateFood() {
+    int valid;
+    do {
+        valid = 1;
+        food.posicao.x = rand() % COLUNAS;
+        food.posicao.y = rand() % LINHAS;
+        tipoComida = rand() % 3;
+
+        for (int i = 0; i < cobra.tamanho; i++) {
+            if (cobra.posicao[i].x == food.posicao.x && cobra.posicao[i].y == food.posicao.y) {
+                valid = 0;
+                break;
+            }
+        }
+
+        for (int i = 0; i < NUM_OBSTACULOS; i++) {
+            if (obstaculos[i].x == food.posicao.x && obstaculos[i].y == food.posicao.y) {
+                valid = 0;
+                break;
+            }
+        }
+    } while (valid == 0);
+}
+
