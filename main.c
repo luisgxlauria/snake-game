@@ -35,3 +35,28 @@ int sair = 0, fimDoJogo = 0, pausado = 0;
 int direcaox = 1, direcaoy = 0;
 int scores[MAX_SCORES];
 int tipoComida;
+
+void initializeGame();
+void generateObstacles();
+void generateFood();
+
+void initializeGame() {
+    screenHideCursor();
+    keyboardInit();
+    timerInit(55);
+    loadScores(scores);
+
+    cobra.tamanho = 1;
+    cobra.capacidade = 10;
+    cobra.velocidade = 55;
+    cobra.posicao = (Coordenada *)malloc(cobra.capacidade * sizeof(Coordenada));
+    if (cobra.posicao == NULL) {
+        printf("Erro ao alocar memória");
+        exit(EXIT_FAILURE);
+    }
+    cobra.posicao[0].x = COLUNAS / 2;
+    cobra.posicao[0].y = LINHAS / 2;
+
+    generateObstacles();
+    generateFood();
+}
