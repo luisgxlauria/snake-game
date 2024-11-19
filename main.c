@@ -12,3 +12,26 @@
 #define INCREMENTO_VELOCIDADE 5
 #define NUM_OBSTACULOS 5
 #define VELOCIDADE_MINIMA 20
+
+typedef struct {
+    int x, y;
+} Coordenada;
+
+typedef struct {
+    Coordenada *posicao;
+    int tamanho;
+    int capacidade;
+    int velocidade;
+} Cobra;
+
+typedef struct {
+    Coordenada posicao;
+} Food;
+
+Cobra cobra;
+Food food;
+Coordenada obstaculos[NUM_OBSTACULOS];
+int sair = 0, fimDoJogo = 0, pausado = 0;
+int direcaox = 1, direcaoy = 0;
+int scores[MAX_SCORES];
+int tipoComida;
