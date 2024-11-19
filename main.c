@@ -241,3 +241,38 @@ void endGame() {
     displayScores(scores);
     free(cobra.posicao);
 }
+
+int main() {
+    initializeGame();
+    drawGame();
+
+    while (!sair) {
+        if (timerTimeOver()) {
+            if (keyhit()) {
+                int tecla = readch();
+                if (tecla == 27 || tecla == 'q') {
+                    sair = 1;
+                } else if (tecla == 'p') {
+                    pausado = !pausado;
+                    showScoreAndHints();
+                } else if (tecla == 'w' && direcaoy != 1) {
+                    direcaox = 0;
+                    direcaoy = -1;
+                } else if (tecla == 'a' && direcaox != 1) {
+                    direcaox = -1;
+                    direcaoy = 0;
+                } else if (tecla == 's' && direcaoy != -1) {
+                    direcaox = 0;
+                    direcaoy = 1;
+                } else if (tecla == 'd' && direcaox != -1) {
+                    direcaox = 1;
+                    direcaoy = 0;
+                }
+            }
+            updateGame();
+            drawGame();
+        }
+    }
+
+    return 0;
+}
