@@ -130,3 +130,44 @@ void showScoreAndHints() {
         printf("Pontuação: %d | Use 'WASD' para mover, 'Q' para sair, 'P' para pausar", cobra.tamanho - 1);
     }
 }
+
+void drawFood();
+void drawGame();
+
+void drawFood() {
+    screenGotoxy(food.posicao.x, food.posicao.y);
+    switch (tipoComida) {
+        case 0:
+            screenSetColor(RED, BLACK);
+            printf("\u2665");
+            break;
+        case 1:
+            screenSetColor(YELLOW, BLACK);
+            printf("\u2666");
+            break;
+        case 2:
+            screenSetColor(MAGENTA, BLACK);
+            printf("\u2663");
+            break;
+    }
+}
+
+void drawGame() {
+    drawFood();
+
+    screenGotoxy(cobra.posicao[cobra.tamanho - 1].x, cobra.posicao[cobra.tamanho - 1].y);
+    printf(" ");
+
+    screenSetColor(LIGHTGREEN, BLACK);
+    screenGotoxy(cobra.posicao[0].x, cobra.posicao[0].y);
+    printf("\u25a0");
+
+    screenSetColor(GREEN, BLACK);
+    for (int i = 1; i < cobra.tamanho; i++) {
+        screenGotoxy(cobra.posicao[i].x, cobra.posicao[i].y);
+        printf("\u2592");
+    }
+
+    screenSetNormal();
+    screenUpdate();
+}
