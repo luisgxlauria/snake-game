@@ -122,3 +122,11 @@ void drawBorders() {
     showScoreAndHints();
 }
 
+void showScoreAndHints() {
+    screenGotoxy(0, LINHAS + 1);
+    if (pausado) {
+        printf("Jogo Pausado. Pressione 'P' para continuar.");
+    } else {
+        printf("Pontuação: %d | Use 'WASD' para mover, 'Q' para sair, 'P' para pausar", cobra.tamanho - 1);
+    }
+}
