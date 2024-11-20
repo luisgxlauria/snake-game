@@ -16,7 +16,6 @@
 #define INCREMENTO_VELOCIDADE 5
 #define NUM_COMIDAS 3  // Normal, Especial, Venenosa
 
-
 typedef struct {
     int x, y;
 } Coordenada;
@@ -40,7 +39,6 @@ typedef struct {
 
 Cobra cobra;
 Food foods[NUM_COMIDAS];
-Food food;
 Coordenada obstaculos[NUM_OBSTACULOS];
 int sair = 0;
 int fimDoJogo = 0;
@@ -48,15 +46,11 @@ int direcaox = 1, direcaoy = 0;
 int scores[MAX_SCORES];
 int velocidade = VELOCIDADE_INICIAL;
 
-
 /* Declaração das funções */
 void initializeGame();
 void drawGame();
 void updateGame();
 void generateFood();
-///void saveScore(int score);
-///void loadScores();
-///void displayScores();
 void drawBorders();
 void generateObstacles();
 void drawObstacles();
@@ -66,23 +60,14 @@ void generateObstacles() {
         int valid;
         do {
             valid = 1;
-            obstaculos[i].x = rand() % COLUNAS;
-            obstaculos[i].y = rand() % LINHAS;
+            obstaculos[i].x = rand() % (COLUNAS - 2) + 1; 
+            obstaculos[i].y = rand() % (LINHAS - 2) + 1; 
 
-            // Verificar se o obstáculo não está na cobra ou na comida
             if (obstaculos[i].x == cobra.posicao[0].x && obstaculos[i].y == cobra.posicao[0].y) {
-                valid = 0;
-            } else if (obstaculos[i].x == food.posicao.x && obstaculos[i].y == food.posicao.y) {
                 valid = 0;
             } else {
                 for (int j = 0; j < cobra.tamanho; j++) {
                     if (obstaculos[i].x == cobra.posicao[j].x && obstaculos[i].y == cobra.posicao[j].y) {
-                        valid = 0;
-                        break;
-                    }
-                }
-                for (int j = 0; j < i; j++) {
-                    if (obstaculos[i].x == obstaculos[j].x && obstaculos[i].y == obstaculos[j].y) {
                         valid = 0;
                         break;
                     }
@@ -95,14 +80,12 @@ void generateObstacles() {
 void generateFood() {
     for (int f = 0; f < NUM_COMIDAS; f++) {
         int valid;
-        int attempts = 0;
         do {
             valid = 1;
-            foods[f].posicao.x = rand() % COLUNAS;
-            foods[f].posicao.y = rand() % LINHAS;
+            foods[f].posicao.x = rand() % (COLUNAS - 2) + 1; 
+            foods[f].posicao.y = rand() % (LINHAS - 2) + 1;
             foods[f].tipo = rand() % 3;
 
-            // Verificar se a posição coincide com a cobra
             for (int i = 0; i < cobra.tamanho; i++) {
                 if (cobra.posicao[i].x == foods[f].posicao.x && cobra.posicao[i].y == foods[f].posicao.y) {
                     valid = 0;
@@ -110,36 +93,15 @@ void generateFood() {
                 }
             }
 
-            // Verificar se a posição coincide com os obstáculos
-            if (valid) {
-                for (int i = 0; i < NUM_OBSTACULOS; i++) {
-                    if (obstaculos[i].x == foods[f].posicao.x && obstaculos[i].y == foods[f].posicao.y) {
-                        valid = 0;
-                        break;
-                    }
+            for (int i = 0; i < NUM_OBSTACULOS; i++) {
+                if (obstaculos[i].x == foods[f].posicao.x && obstaculos[i].y == foods[f].posicao.y) {
+                    valid = 0;
+                    break;
                 }
             }
-
-            // Verificar se a posição coincide com outras comidas já geradas
-            if (valid) {
-                for (int i = 0; i < f; i++) {
-                    if (foods[i].posicao.x == foods[f].posicao.x && foods[i].posicao.y == foods[f].posicao.y) {
-                        valid = 0;
-                        break;
-                    }
-                }
-            }
-
-            attempts++;
-            if (attempts > 1000) {
-                printf("Erro: Não foi possível gerar comida após 1000 tentativas.\n");
-                exit(EXIT_FAILURE);
-            }
-
         } while (!valid);
     }
 }
-
 
 void initializeGame() {
     srand(time(NULL));
@@ -175,7 +137,6 @@ void drawBorders() {
             printf(" ");
         printf("│\n");
     }
-
     printf("└");
     for (int i = 0; i < COLUNAS; i++)
         printf("─");
@@ -192,7 +153,9 @@ void drawObstacles() {
 }
 
 void drawGame() {
-    // Desenhar a comida
+    screenGotoxy(cobra.posicao[cobra.tamanho - 1].x + 1, cobra.posicao[cobra.tamanho - 1].y + 1);
+    printf(" ");
+
     for (int f = 0; f < NUM_COMIDAS; f++) {
         screenGotoxy(foods[f].posicao.x + 1, foods[f].posicao.y + 1);
         switch (foods[f].tipo) {
@@ -209,22 +172,19 @@ void drawGame() {
                 printf("☠");
                 break;
         }
-        screenSetNormal();
+        
     }
     
-
-    // Desenhar os obstáculos
     drawObstacles();
 
-    // Desenhar a cobra
     for (int i = 0; i < cobra.tamanho; i++) {
         screenGotoxy(cobra.posicao[i].x + 1, cobra.posicao[i].y + 1);
         if (i == 0)
-            printf("▓"); // Cabeça
+            printf("▓"); 
         else
-            printf("▒"); // Corpo
+            printf("▒");
     }
-
+    screenSetNormal();
     screenUpdate();
 }
 
@@ -289,77 +249,27 @@ void updateGame() {
                 cobra.posicao = novaPosicao;
             }
 
-            // Regenerar a comida consumida
-            int valid;
-            int attempts = 0;
-            do {
-                valid = 1;
-                foods[f].posicao.x = rand() % COLUNAS;
-                foods[f].posicao.y = rand() % LINHAS;
-                foods[f].tipo = rand() % 3;
-
-                // Verificar se a posição não está ocupada
-                for (int i = 0; i < cobra.tamanho; i++) {
-                    if (cobra.posicao[i].x == foods[f].posicao.x && cobra.posicao[i].y == foods[f].posicao.y) {
-                        valid = 0;
-                        break;
-                    }
-                }
-
-                for (int i = 0; i < NUM_OBSTACULOS; i++) {
-                    if (obstaculos[i].x == foods[f].posicao.x && obstaculos[i].y == foods[f].posicao.y) {
-                        valid = 0;
-                        break;
-                    }
-                }
-
-                // Verificar se a posição não coincide com outras comidas
-                if (valid) {
-                    for (int i = 0; i < NUM_COMIDAS; i++) {
-                        if (i != f && foods[i].posicao.x == foods[f].posicao.x && foods[i].posicao.y == foods[f].posicao.y) {
-                            valid = 0;
-                            break;
-                        }
-                    }
-                }
-
-                attempts++;
-                if (attempts > 1000) {
-                    printf("Erro: Não foi possível regenerar comida após 1000 tentativas.\n");
-                    exit(EXIT_FAILURE);
-                }
-
-            } while (!valid);
-
-            // Ajustar velocidade
-            if (velocidade > VELOCIDADE_MINIMA) {
-                velocidade -= INCREMENTO_VELOCIDADE;
-                timerInit(velocidade);
-            }
-
+            generateFood();
             comeuComida = 1;
             break;
         }
     }
 
     if (!comeuComida) {
-        // Apagar a cauda
+        // Apagar a cauda da cobra
         screenGotoxy(cobra.posicao[cobra.tamanho - 1].x + 1, cobra.posicao[cobra.tamanho - 1].y + 1);
         printf(" ");
     }
 
-    // Mover a cobra
+    // Mover o corpo da cobra
     for (int i = cobra.tamanho - 1; i > 0; i--) {
         cobra.posicao[i] = cobra.posicao[i - 1];
     }
 
+    // Mover a cabeça
     cobra.posicao[0].x = newX;
     cobra.posicao[0].y = newY;
 }
-
-
-
-
 
 
 int main() {
