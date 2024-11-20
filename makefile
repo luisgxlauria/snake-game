@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall -g
 LDFLAGS = 
 OBJECTS = main.o keyboard.o screen.o timer.o
-TARGET = snake_game
+TARGET = snake-game
 
 all: $(TARGET)
 
