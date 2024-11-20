@@ -9,6 +9,25 @@ Antes de compilar o jogo, certifique-se de ter o **GCC** instalado no sistema:
 - **Windows**: Instale o [MinGW](http://mingw.org/).
 - **WSL (Windows Subsystem for Linux)**: Instale o WSL e GCC:  
   `sudo apt install gcc`
+- **macOS**: Siga as instruções abaixo para instalar o GCC:
+
+  1. **Instalando o GCC no macOS**:
+     O GCC faz parte das ferramentas de desenvolvimento Xcode. Para instalá-las, abra o terminal e execute:
+
+     ```bash
+     xcode-select --install
+     ```
+
+     Siga as instruções na tela para completar a instalação.
+
+  2. **Verifique se o GCC está instalado**:
+     Após a instalação, execute no terminal:
+
+     ```bash
+     gcc --version
+     ```
+
+     Isso deve mostrar a versão do GCC instalada. Se o comando não funcionar, verifique se as ferramentas Xcode foram instaladas corretamente.
 
 ## 📚 Bibliotecas Utilizadas
 
