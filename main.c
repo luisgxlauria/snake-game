@@ -194,10 +194,17 @@ void updateGame() {
     int newX = cobra.posicao[0].x + direcaox;
     int newY = cobra.posicao[0].y + direcaoy;
 
-    // Verificar colisão com as paredes
-    if (newX < 0 || newX >= COLUNAS || newY < 0 || newY >= LINHAS) {
+    // Verificar colisão com as paredes laterais
+    if (newX < 0 || newX >= COLUNAS) {
         fimDoJogo = 1;
         return;
+    }
+
+    // Teletransporte ao atingir as bordas superior e inferior
+    if (newY < 0) {
+        newY = LINHAS - 1; // Sai na borda inferior
+    } else if (newY >= LINHAS) {
+        newY = 0; // Sai na borda superior
     }
 
     // Verificar colisão com obstáculos
@@ -270,6 +277,8 @@ void updateGame() {
     cobra.posicao[0].x = newX;
     cobra.posicao[0].y = newY;
 }
+
+
 
 
 int main() {
